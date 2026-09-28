@@ -65,16 +65,50 @@
   @keyframes markBreathe{
     0%,100%{ transform:scale(1); } 50%{ transform:scale(1.1); } }
 
-  .btn{ position:relative; display:inline-flex; align-items:center; justify-content:center; gap:0.6em;
-    padding:1em 2.1em; font-weight:600; font-size:0.95rem; letter-spacing:0.04em;
-    isolation:isolate; transition:transform 220ms ease, box-shadow 320ms ease; }
-  .btn .mark{ width:1em; height:1em; transition:transform 300ms ease; }
-  .btn:active{ transform:translateY(1px); }
-  .btn-primary{ color:var(--amber-ink); background:linear-gradient(180deg, var(--gold-2), var(--gold-1));
-    box-shadow:0 12px 30px rgba(200,155,69,0.28), inset 0 0 0 1px rgba(255,246,224,0.5); }
+  /* ---------- botões: placas forjadas em ouro ---------- */
+  .btn{ position:relative; display:inline-flex; align-items:center; justify-content:center; gap:0.7em;
+    padding:1.2em 2.6em; font-weight:700; font-size:0.8rem; letter-spacing:0.16em; text-transform:uppercase;
+    isolation:isolate; transition:transform 240ms var(--ease-out), box-shadow 340ms ease, color 240ms ease; }
+  .btn .mark{ width:1.15em; height:1.15em; transition:transform 300ms ease, filter 300ms ease; }
+  .btn:active{ transform:translateY(1px) scale(0.995); }
+
+  /* brilho que varre a placa no hover */
+  .btn .sheen{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .btn .sheen::before{ content:""; position:absolute; top:-30%; bottom:-30%; left:0; width:34%;
+    transform:skewX(-24deg) translateX(-220%);
+    background:linear-gradient(90deg, transparent, rgba(255,250,230,0.5), transparent); }
+  .btn:hover .sheen::before{ transition:transform 800ms ease; transform:skewX(-24deg) translateX(480%); }
+
+  /* cantoneiras gravadas */
+  .btn .corners{ position:absolute; inset:5px; pointer-events:none; opacity:0.8;
+    transition:inset 280ms var(--ease-out), opacity 280ms ease;
+    background-image:
+      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor),
+      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor),
+      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor),
+      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor);
+    background-position:left top, left top, right top, right top, left bottom, left bottom, right bottom, right bottom;
+    background-size:11px 1px, 1px 11px, 11px 1px, 1px 11px, 11px 1px, 1px 11px, 11px 1px, 1px 11px;
+    background-repeat:no-repeat; }
+  .btn:hover .corners{ inset:3px; opacity:1; }
+
+  .btn-primary{ color:var(--amber-ink);
+    background:linear-gradient(180deg, #f6d996 0%, #e0b25c 46%, #c08e30 100%);
+    border:1px solid #8a651f;
+    box-shadow:0 14px 36px rgba(200,155,69,0.3), 0 2px 6px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,248,228,0.9), inset 0 -2px 0 rgba(96,64,16,0.55),
+      inset 0 0 18px rgba(255,236,190,0.25); }
+  .btn-primary .corners{ color:rgba(58,40,10,0.6); }
+  .btn-primary::before{ content:""; position:absolute; inset:-6px; pointer-events:none;
+    border:1px solid rgba(226,186,104,0.3); transition:inset 280ms var(--ease-out), border-color 280ms ease; }
   .btn-primary:hover{ transform:translateY(-3px);
-    box-shadow:0 20px 44px rgba(200,155,69,0.4), inset 0 0 0 1px rgba(255,246,224,0.65); }
-  .btn-primary:hover .mark{ transform:rotate(-14deg) scale(1.15); }
+    box-shadow:0 22px 50px rgba(200,155,69,0.42), 0 0 34px rgba(255,217,138,0.28),
+      0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,248,228,1),
+      inset 0 -2px 0 rgba(96,64,16,0.55), inset 0 0 22px rgba(255,236,190,0.4); }
+  .btn-primary:hover::before{ inset:-9px; border-color:rgba(255,217,138,0.65); }
+  .btn-primary:hover .mark{ transform:rotate(-14deg) scale(1.2);
+    filter:drop-shadow(0 0 6px rgba(120,80,20,0.6)); }
+
   .btn-orbit{ position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity 220ms ease; }
   .btn-primary:hover .btn-orbit{ opacity:1; }
   .btn-orbit span{ position:absolute; top:50%; left:50%; width:4px; height:4px; margin:-2px 0 0 -2px;
@@ -82,9 +116,16 @@
     animation:orbitButton linear infinite; }
   @keyframes orbitButton{ from{ transform:rotate(0deg) translateX(var(--r,64px)) rotate(0deg); }
     to{ transform:rotate(360deg) translateX(var(--r,64px)) rotate(-360deg); } }
-  .btn-ghost{ color:var(--ivory-dim); border:1px solid var(--rule);
-    background:rgba(7,9,10,0.4); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
-  .btn-ghost:hover{ color:var(--ivory); border-color:var(--rule-gold); transform:translateY(-2px); }
+
+  .btn-ghost{ color:var(--ivory-dim); border:1px solid rgba(226,186,104,0.32);
+    background:linear-gradient(180deg, rgba(26,22,13,0.55), rgba(10,9,6,0.55));
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    box-shadow:inset 0 1px 0 rgba(241,233,214,0.07), 0 6px 18px rgba(0,0,0,0.35); }
+  .btn-ghost .corners{ color:rgba(226,186,104,0.55); }
+  .btn-ghost .sheen::before{ background:linear-gradient(90deg, transparent, rgba(255,236,190,0.16), transparent); }
+  .btn-ghost:hover{ color:var(--ivory); border-color:rgba(226,186,104,0.7); transform:translateY(-2px);
+    box-shadow:inset 0 1px 0 rgba(241,233,214,0.1), 0 10px 26px rgba(0,0,0,0.45),
+      0 0 24px rgba(226,186,104,0.14); }
 
   /* ---------- nav ---------- */
   .site-nav{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center;
@@ -102,7 +143,7 @@
   .nav-links a:not(.btn)::after{ content:""; position:absolute; left:0; bottom:0; height:1px; width:100%;
     background:var(--gold-2); transform:scaleX(0); transform-origin:0 50%; transition:transform 300ms var(--ease-out); }
   .nav-links a:not(.btn):hover::after{ transform:scaleX(1); }
-  .nav-links .btn{ padding:0.66em 1.5em; font-size:0.82rem; }
+  .nav-links .btn{ padding:0.85em 1.7em; font-size:0.7rem; }
   @media (max-width:720px){ .nav-links a:not(.btn){ display:none; } }
 
   /* =====================================================
@@ -160,7 +201,7 @@
   .hero-inner{ position:relative; z-index:10; height:100%; display:flex; flex-direction:column;
     justify-content:flex-end; padding:0 clamp(1.4rem, 6vw, 6.5rem) clamp(4.4rem, 10vh, 7.5rem);
     max-width:1560px; }
-  .eyebrow{ display:inline-flex; align-items:center; gap:0.7em; font-size:0.76rem; font-weight:600;
+  .eyebrow{ display:inline-flex; align-items:center; gap:1em; font-size:0.76rem; font-weight:600;
     letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-2); margin:0 0 1.3rem;
     text-shadow:0 1px 14px rgba(2,4,4,0.95); }
   .eyebrow::before{ content:""; width:3rem; height:1px; background:linear-gradient(90deg, transparent, var(--gold-1)); }
@@ -647,6 +688,13 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isCoarse = window.matchMedia('(pointer: coarse)').matches;
   var rnd = function(a, b){ return a + Math.random() * (b - a); };
+
+  /* acabamento forjado dos botões: brilho varrido + cantoneiras */
+  document.querySelectorAll('.btn').forEach(function(b){
+    var sh = document.createElement('span'); sh.className = 'sheen'; sh.setAttribute('aria-hidden', 'true');
+    var co = document.createElement('span'); co.className = 'corners'; co.setAttribute('aria-hidden', 'true');
+    b.appendChild(sh); b.appendChild(co);
+  });
 
   /* ---------- grão de filme (acaba com qualquer cara de "estático") ---------- */
   var grainCv = document.getElementById('film-grain');
