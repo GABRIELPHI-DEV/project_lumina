@@ -8,8 +8,9 @@ enquanto você escreve.
 
 | Arquivo | O que é |
 | --- | --- |
-| `index.html` | Site institucional. Autossuficiente: a arte do mundo está embutida em base64 e todas as animações (névoa, raios de sol, partículas, grão de filme, parallax) são geradas por código — nenhuma dependência externa além do Google Fonts. |
-| `demo.html` | Demonstração interativa da plataforma (biblioteca, editor com clima dinâmico e modo Nocturne). Aceita deep-links: `demo.html#dashboard`, `demo.html#editor`, `demo.html#nocturne`. |
+| `index.html` | Site institucional. Autossuficiente: a arte do mundo está embutida em base64 e todas as animações (névoa, raios de sol, partículas, grão de filme, parallax) são geradas por código — nenhuma dependência externa além do Google Fonts. Os CTAs atravessam um portal para o Modo Imersão. |
+| `write.html` | **Modo Imersão** — o coração da Lumina. Você escreve dentro do mundo: o texto controla o clima (chuva, neve, céu limpo), a hora (noite/dia), fogo, vento e névoa; personagens e cena são detectados e aparecem no painel Mundo Vivo. Interface some enquanto você digita, com modo foco, modo leitor (capitular dourada), som ambiente sintetizado (WebAudio, sem arquivos) e rascunho salvo no navegador. |
+| `demo.html` | Demonstração guiada da plataforma (biblioteca, editor com clima dinâmico e modo Nocturne). Aceita deep-links: `demo.html#dashboard`, `demo.html#editor`, `demo.html#nocturne`. |
 | `assets/lumina/hero-base.webp` | Arte do mundo em arquivo, usada pela demo e pelo `og:image`. |
 
 ## Publicação
