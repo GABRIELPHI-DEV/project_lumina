@@ -8,8 +8,9 @@
 <meta property="og:title" content="Lumina — Onde histórias ganham vida">
 <meta property="og:description" content="Imagine. Escreva. Veja seu mundo ganhar vida.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/lumina/hero-base.webp">
+<meta property="og:image" content="https://gabrielphi-dev.github.io/project_lumina/assets/lumina/hero-base.webp">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#07090a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -413,6 +414,16 @@
   .realm:hover .realm-cta{ gap:1.05em; }
   .realm-lumina h3 em{ font-style:italic; color:var(--gold-3); }
   .realm-lumina .realm-cta{ color:var(--gold-2); }
+  /* vida nos reinos: vagalumes dourados / brasas de vela */
+  .realm .p-field{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .p-firefly{ position:absolute; border-radius:50%; background:var(--gold-3);
+    box-shadow:0 0 8px 2px rgba(255,217,138,0.8);
+    animation-name:driftXY, fireflyBlink; animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite; }
+  .p-firefly.ember{ background:#d98a6a; box-shadow:0 0 8px 2px rgba(200,110,80,0.7); }
+  @keyframes driftXY{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(var(--dx,20px), var(--dy,-16px)); } }
+  @keyframes fireflyBlink{ 0%,100%{ opacity:0.08; } 50%{ opacity:0.9; } }
+
   .realm-nocturne h3{ color:#ddccc2; }
   .realm-nocturne h3 em{ font-style:italic; color:var(--wine-glow); }
   .realm-nocturne p{ color:#96857c; }
@@ -637,6 +648,7 @@
       <a class="realm realm-lumina" href="demo.html#editor" aria-label="Conhecer o modo Lumina">
         <span class="scene" aria-hidden="true"></span>
         <span class="tint" aria-hidden="true"></span>
+        <span class="p-field" id="lumina-flies" aria-hidden="true"></span>
         <h3>Lumin<em>a</em></h3>
         <p>Para contos de luz, aventura e maravilha. Florestas douradas, castelos ao longe e a certeza de que algo mágico está prestes a acontecer.</p>
         <span class="realm-cta">Entrar no reino <svg style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#icon-arrow"/></svg></span>
@@ -645,6 +657,7 @@
         <span class="scene" aria-hidden="true"></span>
         <span class="tint" aria-hidden="true"></span>
         <span class="flicker" aria-hidden="true"></span>
+        <span class="p-field" id="nocturne-embers" aria-hidden="true"></span>
         <h3>◐ Nocturn<em>e</em></h3>
         <p>Para romances sombrios, cartas seladas e segredos que só a meia-noite conhece. Velas, veludo e a chuva contra os vitrais.</p>
         <span class="realm-cta">Atravessar a soleira <svg style="width:1.1em;height:1.1em;" aria-hidden="true"><use href="#icon-arrow"/></svg></span>
@@ -769,8 +782,9 @@
     }
   })();
 
-  var lastT = 0, lifeRunning = !reduceMotion;
+  var lastT = 0, lifeRunning = !reduceMotion, heroInView = true;
   function drawLife(t){
+    if(!heroInView){ lastT = t; if(lifeRunning) requestAnimationFrame(drawLife); return; }
     var dt = Math.min((t - lastT) / 1000, 0.05); lastT = t;
     var ctx = lifeCv.getContext('2d');
     ctx.clearRect(0, 0, LW, LH);
@@ -800,6 +814,10 @@
     lifeRunning = !document.hidden;
     if(lifeRunning){ lastT = performance.now(); requestAnimationFrame(drawLife); }
   });
+  // economiza GPU/bateria: partículas do hero só rodam com o hero em vista
+  new IntersectionObserver(function(entries){
+    heroInView = entries[0].isIntersecting;
+  }).observe(document.getElementById('hero'));
 
   /* ---------- parallax sutil no hero ---------- */
   var heroMedia = document.getElementById('hero-media');
@@ -824,11 +842,18 @@
   /* ---------- barra de progresso / nav ---------- */
   var thread = document.getElementById('scroll-thread');
   var nav = document.getElementById('site-nav');
+  var heroInner = document.querySelector('.hero-inner');
   function onScroll(){
     var doc = document.documentElement;
     var max = doc.scrollHeight - window.innerHeight;
-    thread.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
-    nav.classList.toggle('is-solid', window.scrollY > 40);
+    var y = window.scrollY;
+    thread.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+    nav.classList.toggle('is-solid', y > 40);
+    // saída cinematográfica: o texto do hero afunda e some conforme a rolagem
+    if(!reduceMotion && y < LH){
+      heroInner.style.opacity = Math.max(0, 1 - y / (LH * 0.68));
+      heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
+    }
   }
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
@@ -969,6 +994,27 @@
     }
     next();
   }
+  /* vagalumes no reino Lumina, brasas no Nocturne */
+  function sprinkle(hostId, n, ember){
+    var el = document.getElementById(hostId);
+    if(!el || reduceMotion) return;
+    for(var i = 0; i < n; i++){
+      var f = document.createElement('span');
+      f.className = 'p-firefly' + (ember ? ' ember' : '');
+      var s = rnd(2.5, 5);
+      f.style.width = s + 'px'; f.style.height = s + 'px';
+      f.style.left = rnd(3, 95) + '%';
+      f.style.top = rnd(12, 88) + '%';
+      f.style.setProperty('--dx', rnd(-40, 40) + 'px');
+      f.style.setProperty('--dy', rnd(-38, 20) + 'px');
+      f.style.animationDuration = rnd(5, 11) + 's, ' + rnd(2.2, 4.6) + 's';
+      f.style.animationDelay = rnd(0, 6) + 's, ' + rnd(0, 3) + 's';
+      el.appendChild(f);
+    }
+  }
+  sprinkle('lumina-flies', 9, false);
+  sprinkle('nocturne-embers', 6, true);
+
   if(reduceMotion){
     mvText.textContent = 'A neblina abriu caminho quando Elara cruzou o arco de pedra em ruínas. O medalhão de prata pulsava contra o peito — mais forte a cada passo dentro da Floresta de Aldervale. Ao longe, o castelo acendia as primeiras luzes. Começava a chover.';
     Object.keys(cards).forEach(function(k){ cards[k].classList.add('is-on'); });
