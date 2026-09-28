@@ -645,6 +645,7 @@
     <span class="brandmark nav-brand" id="brand-mark-wrap"><svg class="mark" id="brand-mark"><use href="#icon-lumina"/></svg><span class="wordwrap">Lumin<em>a</em></span><span class="egg-arcane-ring" id="egg-arcane-ring"></span></span>
     <div class="nav-actions">
       <button class="amb-btn-landing" id="amb-sound-landing" title="Som ambiente" aria-pressed="false"><svg><use href="#icon-sound-off"/></svg></button>
+      <a href="index.html" class="btn btn-ghost" style="margin-left:0.8rem;">← Voltar ao site</a>
       <a href="#" class="btn btn-ghost" data-nav="dashboard" style="margin-left:0.8rem;">Entrar</a>
     </div>
   </nav>
@@ -2148,6 +2149,26 @@
         'btn-demo: '+hitTarget('btn-demo');
     }, 300);
   }
+
+  /* ================= deep-link do site institucional =================
+     index.html aponta para demo.html#dashboard / #editor / #nocturne;
+     abre direto na tela pedida, sem passar pela landing da demo. */
+  (function(){
+    var boot = (window.location.hash || '').replace('#', '');
+    if(['dashboard', 'editor', 'nocturne'].indexOf(boot) === -1) return;
+    var landing = document.getElementById('screen-landing');
+    var target = document.getElementById('screen-' + boot);
+    if(!landing || !target) return;
+    landing.classList.remove('is-active');
+    target.classList.add('is-active');
+    updateCursorGlow(boot);
+    setEditorAmbientRain(boot === 'editor');
+    setNocturneAmbient(boot === 'nocturne');
+  })();
+  window.addEventListener('hashchange', function(){
+    var b = (window.location.hash || '').replace('#', '');
+    if(['landing', 'dashboard', 'editor', 'nocturne'].indexOf(b) !== -1) showScreen(b);
+  });
 })();
 </script>
 
