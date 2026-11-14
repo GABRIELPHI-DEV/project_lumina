@@ -60,10 +60,11 @@ if(isDemo)attachDemoTools();
 document.addEventListener('keydown',function(e){
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){
   e.preventDefault();
-  var active=document.activeElement;
-  if(active&&active.isContentEditable){active.dispatchEvent(new Event('input',{bubbles:true}));}
+  var active=document.activeElement,editor=active&&active.closest&&active.closest('[contenteditable="true"]');
+  if(!editor&&isWrite)editor=document.getElementById('manuscript');
+  if(!editor&&isDemo){var screen=document.querySelector('.screen.is-active');editor=screen&&screen.querySelector('[contenteditable="true"]');}
+  if(editor)editor.dispatchEvent(new Event('input',{bubbles:true}));
   if(isWrite){var state=document.getElementById('save-state');if(state)state.scrollIntoView({block:'nearest'});}
-  else if(isDemo){document.querySelectorAll('.lumina-action.is-primary').forEach(function(b){b.click();});}
  }
 });
 })();
