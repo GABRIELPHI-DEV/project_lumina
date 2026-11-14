@@ -1,0 +1,88 @@
+/* Lumina 2.0 — refinamento visual: preservar a floresta, trazer mais luz e legibilidade. */
+:root{
+  --lumina-paper:#f5f0e5;--lumina-paper-2:#ebe3d2;--lumina-ink:#26352a;
+  --lumina-moss:#496b4a;--lumina-moss-deep:#304d36;--lumina-gold:#b98b3d;
+}
+html{scroll-behavior:smooth}
+button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid #c89b45!important;outline-offset:3px!important}
+::selection{background:#d8bd83;color:#243126}
+
+/* Site institucional: a arte continua cinematográfica; a interface ganha luz. */
+body.lumina-refined{background:var(--lumina-paper)!important;color:var(--lumina-ink)}
+body.lumina-refined #site-nav{background:rgba(246,242,232,.82);border-bottom:1px solid rgba(57,75,55,.12);backdrop-filter:blur(16px)}
+body.lumina-refined #site-nav.is-solid{background:rgba(248,245,237,.96);box-shadow:0 8px 28px rgba(45,55,39,.08)}
+body.lumina-refined #site-nav a,body.lumina-refined #site-nav .brandmark{color:#2c3b30}
+body.lumina-refined .section{background:#f5f0e5;color:#29392e}
+body.lumina-refined .section:nth-of-type(even){background:#eee7d8}
+body.lumina-refined .section .lede,body.lumina-refined .section p{color:#647061}
+body.lumina-refined .section h2,body.lumina-refined .section h3{color:#2c3b30}
+body.lumina-refined .section .kicker,body.lumina-refined .section .label{color:#6b785f}
+body.lumina-refined .pillar{background:rgba(255,255,255,.55);border-color:rgba(57,75,55,.14);box-shadow:0 14px 36px rgba(42,55,38,.06)}
+body.lumina-refined .pillar p{color:#657064}
+body.lumina-refined .btn-ghost{color:#3e503f;border-color:rgba(57,75,55,.28);background:rgba(255,255,255,.35)}
+body.lumina-refined footer{background:#e9e1d1;color:#53604f;border-top:1px solid rgba(57,75,55,.12)}
+body.lumina-refined #hero::after{background:linear-gradient(90deg,rgba(20,35,25,.48),rgba(20,35,25,.12) 60%,rgba(20,35,25,.22))}
+body.lumina-refined .realm-lumina{box-shadow:0 18px 45px rgba(46,65,42,.14)}
+body.lumina-refined .realm-lumina .tint{background:linear-gradient(180deg,rgba(237,218,167,.06),rgba(27,49,31,.5))}
+body.lumina-refined .realm-nocturne{box-shadow:0 18px 45px rgba(20,10,16,.22)}
+body.lumina-refined .realm-nocturne p{color:#e6d9d4}
+
+/* Editor de escrita: papel quente, contraste confortável e mundo visível ao fundo. */
+body.lumina-writing{background:#e9e2d3!important;color:#29372d}
+body.lumina-writing #world{opacity:.52;filter:saturate(.82) brightness(1.14)}
+body.lumina-writing .page-shade{background:linear-gradient(180deg,rgba(239,233,219,.2),rgba(239,233,219,.52))}
+body.lumina-writing #cine-vignette{opacity:.16}
+body.lumina-writing .topbar{background:rgba(248,245,237,.88);border-bottom:1px solid rgba(55,71,53,.15);color:#344536;backdrop-filter:blur(14px)}
+body.lumina-writing .topbar .brandmark,body.lumina-writing .topbar .story-title{color:#344536}
+body.lumina-writing .tool-btn{color:#52634f;border-color:rgba(57,75,55,.18)}
+body.lumina-writing .sheet{background:#fbf8ef;color:#34372e;box-shadow:0 22px 70px rgba(48,44,31,.2);border:1px solid rgba(111,91,57,.16)}
+body.lumina-writing #chapter-title,body.lumina-writing #manuscript{color:#34372e}
+body.lumina-writing #manuscript{caret-color:#8c6a32}
+body.lumina-writing #world-rail{background:rgba(248,245,237,.94);color:#334333;border-left:1px solid rgba(57,75,55,.14);box-shadow:-12px 0 40px rgba(45,48,34,.08)}
+body.lumina-writing #world-rail h3,body.lumina-writing #world-rail .val{color:#354a36}
+body.lumina-writing #world-rail .rail-card{background:rgba(232,226,211,.7);border-color:rgba(57,75,55,.12)}
+body.lumina-writing .statusbar{background:rgba(248,245,237,.92);color:#5b6756;border-top:1px solid rgba(57,75,55,.14)}
+body.lumina-writing .save-state{color:#526d4d}
+body.lumina-writing .tool-btn:hover{background:#e8e0cf;color:#293b2d}
+
+/* Demonstração: dashboard/editor claros; Nocturne mantém integralmente o seu tema dark romance. */
+body.lumina-demo:not(:has(#screen-nocturne.is-active)){background:#f3eee3;color:#2b392e}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .app-header{background:rgba(247,243,233,.92);border-bottom:1px solid rgba(55,71,53,.14);color:#354536}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .app-header .brandmark{color:#354536}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .crumb{color:#77816e}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-dashboard,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-editor{background:#f3eee3;color:#2b392e}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-dashboard h1,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-editor h1{color:#2e4032}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-dashboard .lede,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) #screen-editor .lede{color:#6d7969}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .story-card,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .rail,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .world-panel{background:#fbf8ef;color:#344333;border-color:rgba(57,75,55,.15);box-shadow:0 14px 38px rgba(42,55,38,.08)}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .story-body,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .rail h4,
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .world-panel h3{color:#354a36}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .manuscript-col{background:rgba(248,245,237,.88);border-color:rgba(57,75,55,.14)}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .page-frame{background:#fbf8ef;color:#34372e;box-shadow:0 18px 48px rgba(44,45,34,.12)}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .manuscript{color:#34372e}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .ambient-controls .amb-btn{color:#53644f;border-color:rgba(57,75,55,.18)}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .editor-scene{filter:brightness(1.12) saturate(.86)}
+body.lumina-demo:not(:has(#screen-nocturne.is-active)) .story-meta{color:#77816e}
+.lumina-actionbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.lumina-action{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 13px;border:1px solid rgba(75,96,67,.25);border-radius:999px;background:rgba(255,255,255,.68);color:#43563f;font:600 12px/1.2 Manrope, sans-serif;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.lumina-action:hover{transform:translateY(-2px);background:#fff;box-shadow:0 7px 18px rgba(46,62,42,.12)}
+.lumina-action:focus-visible{outline:3px solid #c89b45;outline-offset:3px}
+.lumina-action.is-primary{background:#496b4a;color:#fff;border-color:#496b4a}
+.lumina-action.is-primary:hover{background:#36563b}
+@media(max-width:760px){
+ body.lumina-writing .topbar{padding-inline:12px}
+ body.lumina-writing .topbar .story-title{max-width:28vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .lumina-actionbar{gap:6px}
+ .lumina-action{padding:8px 10px;font-size:11px}
+ body.lumina-refined .hero-inner{padding-inline:22px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .lumina-action{transition:none}
+}
