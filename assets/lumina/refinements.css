@@ -86,3 +86,6 @@ body.lumina-demo:not(:has(#screen-nocturne.is-active)) .story-meta{color:#77816e
  html{scroll-behavior:auto}
  .lumina-action{transition:none}
 }
+
+/* A criatura voadora foi retirada da experiência; a magia permanece nas partículas e na paisagem. */
+body.lumina-demo #layer-dragon{display:none!important;visibility:hidden!important;pointer-events:none!important}
