@@ -1,0 +1,75 @@
+name: Lumina quality checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [lumina-v2-improvements]
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate embedded JavaScript
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import re, subprocess, tempfile
+
+          class ScriptCollector(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_script = False
+                  self.current = []
+                  self.scripts = []
+                  self.sources = []
+              def handle_starttag(self, tag, attrs):
+                  if tag == "script":
+                      attrs = dict(attrs)
+                      if attrs.get("src"):
+                          self.sources.append(attrs["src"].split("?")[0])
+                      else:
+                          self.in_script = True
+                          self.current = []
+              def handle_data(self, data):
+                  if self.in_script:
+                      self.current.append(data)
+              def handle_endtag(self, tag):
+                  if tag == "script" and self.in_script:
+                      self.scripts.append("".join(self.current))
+                      self.in_script = False
+
+          for page in ("index.html", "write.html", "demo.html"):
+              source = Path(page).read_text(encoding="utf-8")
+              parser = ScriptCollector()
+              parser.feed(source)
+              for i, script in enumerate(parser.scripts):
+                  if not script.strip():
+                      continue
+                  tmp = Path(tempfile.gettempdir()) / f"lumina-{page}-{i}.js"
+                  tmp.write_text(script, encoding="utf-8")
+                  subprocess.run(["node", "--check", str(tmp)], check=True)
+              for src in parser.sources:
+                  if not (Path(page).parent / src).is_file():
+                      raise SystemExit(f"{page}: script externo ausente: {src}")
+              if 'assets/lumina/refinements.css' not in source:
+                  raise SystemExit(f"{page}: stylesheet de refinamento não vinculado")
+              if 'assets/lumina/editor-tools.js' not in source:
+                  raise SystemExit(f"{page}: ferramentas do editor não vinculadas")
+              print(f"OK: {page} — {len(parser.scripts)} bloco(s) JS")
+          for required in ("assets/lumina/refinements.css", "assets/lumina/editor-tools.js", "assets/lumina/hero-base.webp"):
+              if not Path(required).is_file():
+                  raise SystemExit(f"Arquivo obrigatório ausente: {required}")
+          PY
+          node --check assets/lumina/editor-tools.js
+      - name: Check whitespace and patch integrity
+        run: git diff --check
