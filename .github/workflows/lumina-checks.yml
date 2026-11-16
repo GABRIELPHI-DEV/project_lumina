@@ -73,3 +73,21 @@ jobs:
           node --check assets/lumina/editor-tools.js
       - name: Check whitespace and patch integrity
         run: git diff --check
+
+      - name: Install Playwright browser tests
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Run Lumina browser end-to-end tests
+        shell: bash
+        run: |
+          python3 -m http.server 4173 > /tmp/lumina-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/demo.html > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          node tests/lumina.e2e.cjs
