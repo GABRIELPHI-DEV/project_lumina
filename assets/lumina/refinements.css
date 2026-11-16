@@ -104,3 +104,6 @@ body.lumina-demo #layer-dragon{display:none!important;visibility:hidden!importan
 @media(prefers-reduced-motion:reduce){
  .lumina-library-card,.add-card{transition:none!important}
 }
+
+/* CTAs da landing precisam ficar acima dos hotspots transparentes da paisagem. */
+body.lumina-demo #screen-landing .hero{z-index:24}
