@@ -140,7 +140,7 @@ function attachDemoLibrary(){
  }
  function loadStory(id){
   saveActive();active=id;try{localStorage.setItem(activeKey,id);}catch(e){}
-  var d=readLibrary()[id];if(!d)return;activeMode=d.mode==='nocturne'?'nocturne':'editor';var ed=editor(),m=meta();if(!ed||!m)return;
+  var d=readLibrary()[id];if(!d){activeMode=id==='nocturne'?'nocturne':'editor';return;}activeMode=d.mode==='nocturne'?'nocturne':'editor';var ed=editor(),m=meta();if(!ed||!m)return;
   var t=m.querySelector('p'),h=m.querySelector('h2');if(t)t.textContent=d.title||'Minha história';if(h)h.textContent=d.chapter||'Capítulo 1';
   ed.innerHTML=cleanHtml(d.html||'');ed.dispatchEvent(new Event('input',{bubbles:true}));
  }
