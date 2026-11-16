@@ -653,3 +653,58 @@ body.lumina-writing .rail-card .val{color:#354a36}
  body.lumina-refined .pillar,body.lumina-demo .story-card,
  body.lumina-demo .pillar-card,body.lumina-writing .tool-btn{transition:none!important}
 }
+
+
+/* Seções com ID próprio tinham fundos inline no CSS-base; alinhar a hierarquia explicitamente. */
+body.lumina-refined #manifesto{
+ background:radial-gradient(ellipse at 50% 0%,rgba(126,145,103,.13),transparent 52%),#f4efe4!important;
+ color:#26352a;
+}
+body.lumina-refined #manifesto blockquote{
+ color:#26352a;
+ font-size:clamp(2rem,4.3vw,3.8rem);
+ letter-spacing:-.025em;
+}
+body.lumina-refined #manifesto blockquote .w{opacity:.34}
+body.lumina-refined #manifesto blockquote .w.is-lit{opacity:1}
+body.lumina-refined #manifesto blockquote .w.gold{color:#9a7437}
+body.lumina-refined #manifesto cite{color:#71806d;letter-spacing:.22em}
+body.lumina-refined #manifesto .manifesto-rule{
+ background:linear-gradient(180deg,transparent,#a7803d,transparent);
+}
+body.lumina-refined #mundo-vivo{
+ background:#17271d!important;
+ color:#f3ead8;
+}
+body.lumina-refined #mundo-vivo .section h2,
+body.lumina-refined #mundo-vivo h2{color:#f3ead8}
+body.lumina-refined #mundo-vivo .section .lede,
+body.lumina-refined #mundo-vivo .section p{color:rgba(243,234,216,.72)}
+body.lumina-refined #mundo-vivo .kicker{color:#d5b56d}
+body.lumina-refined #pilares{
+ background:radial-gradient(ellipse at 12% 0%,rgba(120,139,99,.1),transparent 42%),#eee7d8!important;
+ color:#26352a;
+}
+body.lumina-refined #pilares .pillar{background:rgba(255,255,255,.46)}
+body.lumina-refined #atmosferas{
+ background:radial-gradient(ellipse at 85% 8%,rgba(181,138,66,.1),transparent 40%),#f4efe4!important;
+ color:#26352a;
+}
+body.lumina-refined #atmosferas .head-center h2{margin-inline:auto}
+body.lumina-refined #atmosferas .head-center .lede{color:#606d60}
+body.lumina-refined #atmosferas .duality{
+ border-radius:22px;
+ overflow:hidden;
+ box-shadow:0 24px 65px rgba(32,43,31,.16);
+}
+body.lumina-refined #atmosferas .realm{min-height:clamp(420px,42vw,540px)}
+body.lumina-refined #portal{
+ background:#17271d!important;
+ color:#f3ead8;
+}
+body.lumina-refined #portal h2{color:#f3ead8}
+body.lumina-refined #portal .lede{color:rgba(243,234,216,.78)}
+@media(max-width:820px){
+ body.lumina-refined #atmosferas .duality{border-radius:17px}
+ body.lumina-refined #atmosferas .realm{min-height:390px}
+}
