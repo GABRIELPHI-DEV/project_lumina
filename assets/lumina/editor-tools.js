@@ -196,8 +196,8 @@ function attachDemoLibrary(){
 }
 
 if(isWrite)attachWriteTools();
-if(isDemo)attachDemoLibrary();
 if(isDemo)attachDemoTools();
+if(isDemo)attachDemoLibrary();
 document.addEventListener('keydown',function(e){
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){
   e.preventDefault();var active=document.activeElement,editor=active&&active.closest&&active.closest('[contenteditable="true"]');
