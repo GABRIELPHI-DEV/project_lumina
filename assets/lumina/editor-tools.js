@@ -118,7 +118,68 @@ function attachDemoTools(){
   window.addEventListener('pagehide',saveNow);
  });
 }
+
+function attachDemoLibrary(){
+ var grid=document.querySelector('#screen-dashboard .story-grid');if(!grid)return;
+ var libraryKey='lumina-library-v1',activeKey='lumina-active-story-v1';
+ var editors={editor:{id:'manuscript',status:'save-status',screen:'editor'},nocturne:{id:'nocturne-manuscript',status:'save-status-noc',screen:'nocturne'}};
+ var active='coroa';
+ function readLibrary(){try{var x=JSON.parse(localStorage.getItem(libraryKey)||'{}');return x&&typeof x==='object'?x:{};}catch(e){return {};}}
+ function writeLibrary(data){try{localStorage.setItem(libraryKey,JSON.stringify(data));return true;}catch(e){return false;}}
+ function config(){return active==='nocturne'?editors.nocturne:editors.editor;}
+ function editor(){return document.getElementById(config().id);}
+ function meta(){var s=document.getElementById('screen-'+config().screen);return s&&s.querySelector('.manuscript-topbar .titles');}
+ function saveActive(){
+  var ed=editor(),m=meta();if(!ed||!m)return;
+  var d=readLibrary(),t=m.querySelector('p'),h=m.querySelector('h2');
+  d[active]={id:active,title:t?t.textContent.trim():'Minha história',chapter:h?h.textContent.trim():'',
+   html:ed.innerHTML,updatedAt:new Date().toISOString(),mode:active==='nocturne'?'nocturne':'editor'};
+  if(!writeLibrary(d)){var st=document.getElementById(config().status);if(st)st.textContent='Falha ao salvar biblioteca';}
+ }
+ function loadStory(id){
+  saveActive();active=id;try{localStorage.setItem(activeKey,id);}catch(e){}
+  var d=readLibrary()[id],ed=editor(),m=meta();if(!d||!ed||!m)return;
+  var t=m.querySelector('p'),h=m.querySelector('h2');if(t)t.textContent=d.title||'Minha história';if(h)h.textContent=d.chapter||'Capítulo 1';
+  ed.innerHTML=cleanHtml(d.html||'');ed.dispatchEvent(new Event('input',{bubbles:true}));
+ }
+ function cardFor(s){
+  var card=document.createElement('article');card.className='story-card lumina-library-card';card.tabIndex=0;
+  card.setAttribute('role','button');card.dataset.storyId=s.id;card.dataset.nav=s.mode==='nocturne'?'nocturne':'editor';
+  var cover=document.createElement('div');cover.className='story-cover';
+  var art=document.createElement('div');art.className='lumina-library-cover';art.textContent=s.mode==='nocturne'?'◐':'✦';cover.appendChild(art);
+  var body=document.createElement('div');body.className='story-body';
+  var title=document.createElement('p');title.className='story-title';title.textContent=s.title||'Sem título';
+  var genre=document.createElement('p');genre.className='story-genre';genre.textContent=s.mode==='nocturne'?'Dark Romance':'Minha história';
+  var metaText=document.createElement('p');metaText.className='story-meta';metaText.textContent='Salva neste dispositivo · '+new Date(s.updatedAt||Date.now()).toLocaleDateString('pt-BR');
+  var open=document.createElement('span');open.className='story-open';open.textContent='Abrir história';
+  body.append(title,genre,metaText,open);card.append(cover,body);return card;
+ }
+ function render(){grid.querySelectorAll('.lumina-library-card').forEach(function(n){n.remove();});
+  var d=readLibrary();Object.keys(d).filter(function(id){return id.indexOf('story-')===0;}).forEach(function(id){grid.insertBefore(cardFor(d[id]),grid.querySelector('.add-card'));});
+ }
+ function createStory(){
+  var title=prompt('Qual será o título da sua história?');if(title===null)return;title=title.trim().slice(0,90);
+  if(!title){alert('Digite um título para criar sua história.');return;}
+  var mode=confirm('Criar no universo Lumina Nocturne?\\n\\nOK: Nocturne (dark romance)\\nCancelar: Lumina (fantasia)')?'nocturne':'editor';
+  var id='story-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),d=readLibrary();
+  d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};
+  if(!writeLibrary(d)){alert('O navegador não conseguiu guardar a nova história. Verifique o espaço disponível.');return;}
+  render();loadStory(id);var nav=mode==='nocturne'?'nocturne':'editor',link=document.querySelector('[data-nav="'+nav+'"]');
+  if(link)link.click();else{var now=document.querySelector('.screen.is-active'),target=document.getElementById('screen-'+nav);if(now)now.classList.remove('is-active');if(target)target.classList.add('is-active');}
+ }
+ var add=grid.querySelector('.add-card');if(add){add.setAttribute('role','button');add.tabIndex=0;add.setAttribute('aria-label','Criar nova história');
+  add.addEventListener('click',createStory);add.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();createStory();}});
+ }
+ grid.addEventListener('click',function(e){var c=e.target.closest('[data-story-id]');if(c)loadStory(c.dataset.storyId);});
+ grid.addEventListener('keydown',function(e){var c=e.target.closest('[data-story-id]');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();loadStory(c.dataset.storyId);}});
+ Object.keys(editors).forEach(function(k){var ed=document.getElementById(editors[k].id);if(ed)ed.addEventListener('input',function(){saveActive();});});
+ var stored='coroa';try{stored=localStorage.getItem(activeKey)||'coroa';}catch(e){}
+ if(stored==='nocturne')active='nocturne';else if(stored.indexOf('story-')===0&&readLibrary()[stored])active=stored;
+ render();window.addEventListener('pagehide',saveActive);
+}
+
 if(isWrite)attachWriteTools();
+if(isDemo)attachDemoLibrary();
 if(isDemo)attachDemoTools();
 document.addEventListener('keydown',function(e){
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){
