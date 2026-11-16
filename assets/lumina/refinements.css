@@ -160,3 +160,466 @@ body.lumina-refined #site-nav .nav-links .btn.btn-ghost:hover{
 @media(prefers-reduced-motion:reduce){
  body.lumina-refined #site-nav,body.lumina-refined #site-nav .nav-links .btn.btn-ghost{transition:none}
 }
+
+
+/* =========================================================
+   LUMINA DESIGN SYSTEM 2.1 — acabamento visual transversal
+   ========================================================= */
+:root{
+ --lumina-ink:#17231b;
+ --lumina-forest:#243c2d;
+ --lumina-forest-2:#31543b;
+ --lumina-gold:#b58a42;
+ --lumina-gold-light:#e2c27e;
+ --lumina-cream:#f4efe4;
+ --lumina-cream-deep:#e9e1d2;
+ --lumina-muted:#697366;
+ --lumina-line:rgba(42,59,43,.14);
+ --lumina-shadow:0 24px 70px rgba(27,39,29,.12);
+}
+html{scroll-padding-top:5.5rem}
+body.lumina-refined,body.lumina-demo,body.lumina-writing{
+ -webkit-font-smoothing:antialiased;
+ text-rendering:optimizeLegibility;
+}
+body.lumina-refined a,body.lumina-demo a,body.lumina-writing a,
+body.lumina-refined button,body.lumina-demo button,body.lumina-writing button{
+ -webkit-tap-highlight-color:transparent;
+}
+body.lumina-refined :focus-visible,body.lumina-demo :focus-visible,body.lumina-writing :focus-visible{
+ outline:2px solid var(--lumina-gold-light)!important;
+ outline-offset:4px!important;
+}
+
+/* Site institucional: transições suaves entre o mundo cinematográfico e a página editorial. */
+body.lumina-refined #hero{
+ isolation:isolate;
+}
+body.lumina-refined #hero::after{
+ content:"";
+ position:absolute;
+ inset:auto 0 0;
+ height:clamp(90px,16vh,180px);
+ z-index:2;
+ pointer-events:none;
+ background:linear-gradient(180deg,transparent,rgba(20,31,23,.16));
+}
+body.lumina-refined .hero-inner{
+ padding-top:clamp(5.5rem,10vh,8rem);
+ padding-bottom:clamp(4rem,8vh,6rem);
+}
+body.lumina-refined #hero h1{
+ max-width:12ch;
+ letter-spacing:-.035em;
+ line-height:1.03;
+ text-wrap:balance;
+ text-shadow:0 5px 34px rgba(0,0,0,.34);
+}
+body.lumina-refined .hero-lede{
+ max-width:36rem;
+ color:rgba(249,245,232,.82);
+ line-height:1.82;
+}
+body.lumina-refined .hero-actions{gap:.85rem}
+body.lumina-refined .hero-actions .btn{
+ min-height:3.25rem;
+ border-radius:999px;
+ padding-inline:1.65rem;
+}
+body.lumina-refined .hero-actions .btn-primary{
+ box-shadow:0 12px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.32);
+}
+body.lumina-refined .hero-actions .btn-ghost{
+ border-color:rgba(245,231,197,.5);
+ background:rgba(12,23,16,.25);
+ backdrop-filter:blur(10px);
+}
+body.lumina-refined .section{
+ padding-block:clamp(5rem,10vw,8.5rem);
+ background:
+  radial-gradient(ellipse at 8% 8%,rgba(120,139,99,.09),transparent 34%),
+  var(--lumina-cream);
+}
+body.lumina-refined .section:nth-of-type(even){
+ background:
+  radial-gradient(ellipse at 92% 14%,rgba(181,138,66,.09),transparent 32%),
+  var(--lumina-cream-deep);
+}
+body.lumina-refined .section-inner{max-width:1160px}
+body.lumina-refined .section .kicker{
+ color:#75816d;
+ letter-spacing:.2em;
+}
+body.lumina-refined .section h2{
+ max-width:17ch;
+ color:var(--lumina-ink);
+ font-size:clamp(2.35rem,4.6vw,4.15rem);
+ letter-spacing:-.035em;
+ line-height:1.08;
+ text-wrap:balance;
+}
+body.lumina-refined .section h2 em{
+ color:#9a7437;
+}
+body.lumina-refined .section .lede,
+body.lumina-refined .section p{
+ color:#606d60;
+}
+body.lumina-refined #manifesto .manifesto-rule{
+ background:linear-gradient(90deg,transparent,rgba(77,99,71,.45),transparent);
+}
+body.lumina-refined .pillars{
+ gap:clamp(1.1rem,2.5vw,2rem);
+}
+body.lumina-refined .pillar{
+ padding:1.65rem 1.55rem 1.8rem;
+ border:1px solid rgba(54,75,53,.12);
+ border-radius:18px;
+ background:rgba(255,255,255,.38);
+ box-shadow:0 10px 32px rgba(40,55,39,.035);
+ transition:transform 320ms ease,border-color 320ms ease,box-shadow 320ms ease,background 320ms ease;
+}
+body.lumina-refined .pillar:hover{
+ transform:translateY(-5px);
+ border-color:rgba(154,116,55,.34);
+ background:rgba(255,255,255,.68);
+ box-shadow:0 22px 48px rgba(40,55,39,.09);
+}
+body.lumina-refined .pillar::before{
+ left:1.55rem;right:1.55rem;width:auto;
+ background:rgba(54,75,53,.13);
+}
+body.lumina-refined .pillar::after{
+ left:1.55rem;width:2.8rem;
+ background:linear-gradient(90deg,#a7803d,#d9bd80);
+}
+body.lumina-refined .pillar .pnum{color:#9b7a43}
+body.lumina-refined .pillar h3{
+ color:#2e4032;
+ font-size:clamp(1.25rem,1.7vw,1.55rem);
+ line-height:1.2;
+}
+body.lumina-refined .pillar p{color:#687365}
+body.lumina-refined .realm{
+ min-height:clamp(390px,42vw,520px);
+ border:1px solid rgba(53,68,47,.16);
+ border-radius:22px;
+ overflow:hidden;
+ box-shadow:0 22px 55px rgba(32,43,31,.14);
+ isolation:isolate;
+}
+body.lumina-refined .realm .scene{transition:transform 900ms cubic-bezier(.2,.7,.2,1),filter 900ms ease}
+body.lumina-refined .realm:hover .scene{filter:saturate(1.08)}
+body.lumina-refined .realm .tint{
+ background:linear-gradient(180deg,rgba(8,17,11,.08) 8%,rgba(8,17,11,.22) 42%,rgba(8,17,11,.88) 100%);
+}
+body.lumina-refined .realm h3{
+ font-size:clamp(2rem,3.5vw,3.1rem);
+ letter-spacing:-.025em;
+}
+body.lumina-refined .realm p{max-width:31ch;color:rgba(247,239,222,.82)}
+body.lumina-refined .realm .realm-cta{
+ display:inline-flex;
+ align-items:center;
+ gap:.7rem;
+ width:max-content;
+ padding:.8rem 0;
+ border-bottom:1px solid currentColor;
+ letter-spacing:.16em;
+}
+body.lumina-refined footer{
+ padding:2.4rem clamp(1.4rem,6vw,6.5rem);
+}
+
+/* Demonstração: hierarquia mais clara, superfícies profundas e cantos consistentes. */
+body.lumina-demo{
+ --demo-radius:18px;
+ --demo-surface:rgba(14,27,19,.78);
+ --demo-stroke:rgba(229,208,165,.13);
+ background:
+  radial-gradient(ellipse at 50% -15%,rgba(72,105,68,.16),transparent 48%),
+  #07100c;
+}
+body.lumina-demo .landing-nav{
+ padding-inline:clamp(1.2rem,5vw,4.5rem);
+ background:linear-gradient(180deg,rgba(4,9,7,.52),transparent);
+}
+body.lumina-demo .landing-nav .nav-brand{
+ filter:drop-shadow(0 2px 14px rgba(0,0,0,.45));
+}
+body.lumina-demo .nav-actions{gap:.65rem}
+body.lumina-demo .nav-actions .btn{
+ min-height:2.8rem;
+ padding:.78em 1.3em;
+ border-radius:999px;
+}
+body.lumina-demo .nav-actions .btn-ghost{
+ border-color:rgba(230,202,145,.34);
+ background:rgba(10,19,14,.34);
+ backdrop-filter:blur(12px);
+}
+body.lumina-demo .hero-copy h1{
+ max-width:11ch;
+ font-size:clamp(2.8rem,5.2vw,5rem);
+ line-height:1.04;
+ letter-spacing:-.035em;
+ text-wrap:balance;
+}
+body.lumina-demo .hero-copy p{
+ max-width:36ch;
+ line-height:1.78;
+ color:rgba(243,234,216,.82);
+}
+body.lumina-demo .hero-actions{gap:.75rem}
+body.lumina-demo .hero-actions .btn{
+ min-height:3.15rem;
+ padding-inline:1.55rem;
+ border-radius:999px;
+}
+body.lumina-demo .pillars{
+ padding:clamp(3.5rem,7vw,6rem) clamp(1.2rem,5vw,4rem);
+ gap:1.15rem;
+ background:linear-gradient(180deg,rgba(7,16,12,0),#07100c 18%);
+}
+body.lumina-demo .pillar-card{
+ min-height:210px;
+ padding:1.8rem;
+ border:1px solid var(--demo-stroke);
+ border-radius:var(--demo-radius);
+ background:linear-gradient(145deg,rgba(26,45,31,.78),rgba(10,20,14,.88));
+ box-shadow:0 18px 42px rgba(0,0,0,.16);
+}
+body.lumina-demo .pillar-card:hover{
+ border-color:rgba(226,186,104,.42);
+ transform:translateY(-5px);
+ box-shadow:0 24px 55px rgba(0,0,0,.24),0 0 24px rgba(200,155,69,.09);
+}
+body.lumina-demo .pillar-card h3{font-size:1.45rem;line-height:1.2}
+body.lumina-demo .pillar-card p{line-height:1.75;color:rgba(243,234,216,.68)}
+body.lumina-demo #screen-dashboard{
+ min-height:100vh;
+ background:
+  radial-gradient(ellipse at 14% 0%,rgba(65,105,67,.2),transparent 40%),
+  radial-gradient(ellipse at 100% 30%,rgba(177,133,62,.07),transparent 35%),
+  #07100c;
+}
+body.lumina-demo .dash-wrap{max-width:1240px;padding-top:clamp(3rem,7vh,5.2rem)}
+body.lumina-demo .dash-wrap h1{
+ font-size:clamp(2.5rem,4.5vw,3.6rem);
+ letter-spacing:-.035em;
+}
+body.lumina-demo .dash-wrap .lede{max-width:58ch;line-height:1.75;color:rgba(243,234,216,.67)}
+body.lumina-demo .story-grid{gap:1.35rem}
+body.lumina-demo .story-card{
+ border:1px solid rgba(229,208,165,.13);
+ border-radius:18px;
+ background:linear-gradient(155deg,rgba(23,40,28,.98),rgba(10,19,14,.98));
+ box-shadow:0 14px 38px rgba(0,0,0,.18);
+}
+body.lumina-demo .story-card:hover{
+ border-color:rgba(226,186,104,.48);
+ transform:translateY(-7px);
+ box-shadow:0 24px 52px rgba(0,0,0,.28),0 0 24px rgba(200,155,69,.09);
+}
+body.lumina-demo .story-cover{height:190px}
+body.lumina-demo .story-body{padding:1.35rem 1.4rem 1.5rem}
+body.lumina-demo .story-title{font-size:1.4rem;line-height:1.2}
+body.lumina-demo .story-meta{line-height:1.7}
+body.lumina-demo .add-card{
+ min-height:300px;
+ border:1px dashed rgba(226,186,104,.28);
+ border-radius:18px;
+ background:rgba(255,255,255,.018);
+}
+body.lumina-demo .add-card:hover{background:rgba(226,186,104,.045)}
+body.lumina-demo .editor-layout{
+ grid-template-columns:230px minmax(0,1fr) 300px;
+ gap:0;
+ background:rgba(5,12,8,.46);
+}
+body.lumina-demo .rail,body.lumina-demo .world-panel{
+ background:rgba(8,17,12,.72);
+ backdrop-filter:blur(18px);
+ border-color:rgba(229,208,165,.12);
+}
+body.lumina-demo .rail{padding:2rem 1.4rem}
+body.lumina-demo .rail h4,body.lumina-demo .world-panel h3{
+ color:#e6d3a8;
+ letter-spacing:.14em;
+ text-transform:uppercase;
+ font-size:.72rem;
+}
+body.lumina-demo .chapter > a{
+ border-radius:0 9px 9px 0;
+ padding:.62rem .8rem;
+ transition:background 220ms ease,color 220ms ease,border-color 220ms ease;
+}
+body.lumina-demo .chapter.is-active > a{
+ background:linear-gradient(90deg,rgba(226,186,104,.14),transparent);
+ border-left-color:#d9b66b;
+}
+body.lumina-demo .editor-main{
+ padding:clamp(1.4rem,3vw,3.2rem);
+}
+body.lumina-demo .editor-main .manuscript,
+body.lumina-demo #manuscript{
+ max-width:72ch;
+ margin-inline:auto;
+ font-size:clamp(1.08rem,1.35vw,1.25rem);
+ line-height:1.95;
+}
+body.lumina-demo .world-panel{padding:1.7rem 1.35rem}
+body.lumina-demo .world-panel .w-card{
+ border:1px solid rgba(229,208,165,.11);
+ border-radius:12px;
+ background:rgba(255,255,255,.025);
+ padding:.85rem .95rem;
+ margin-bottom:.7rem;
+}
+body.lumina-demo .btn-nocturne-link{letter-spacing:.06em}
+body.lumina-demo .btn-primary,body.lumina-demo .btn-ghost{
+ border-radius:999px;
+}
+body.lumina-demo #screen-nocturne .btn{border-radius:999px}
+
+/* Modo imersivo: interface flutuante discreta, sem disputar atenção com a escrita. */
+body.lumina-writing .topbar{
+ padding:.9rem clamp(1rem,3.5vw,3rem);
+ background:linear-gradient(180deg,rgba(4,7,6,.88),rgba(4,7,6,.28));
+ border-bottom:1px solid rgba(226,186,104,.09);
+ backdrop-filter:blur(14px);
+}
+body.lumina-writing .brandmark{font-size:1.3rem}
+body.lumina-writing .topbar .story-title{
+ max-width:36rem;
+ margin-inline:auto;
+ padding:.45rem .8rem;
+ border:1px solid transparent;
+ border-radius:999px;
+ transition:background 220ms ease,border-color 220ms ease;
+}
+body.lumina-writing .topbar .story-title:focus{
+ background:rgba(255,255,255,.045);
+ border-color:rgba(226,186,104,.2);
+}
+body.lumina-writing .top-actions{gap:.25rem}
+body.lumina-writing .tool-btn{
+ border:1px solid transparent;
+ border-radius:999px;
+ padding:.62em .9em;
+}
+body.lumina-writing .tool-btn:hover,
+body.lumina-writing .tool-btn[aria-pressed="true"]{
+ background:rgba(226,186,104,.08);
+ border-color:rgba(226,186,104,.2);
+}
+body.lumina-writing .statusbar{
+ padding:.85rem clamp(1rem,3.5vw,3rem);
+ background:linear-gradient(0deg,rgba(4,7,6,.9),rgba(4,7,6,.22));
+ border-top:1px solid rgba(226,186,104,.08);
+ backdrop-filter:blur(12px);
+}
+body.lumina-writing .sheet{
+ max-width:min(70ch,92vw);
+ padding-top:clamp(8rem,17vh,12rem);
+}
+body.lumina-writing .chapter-head{margin-bottom:3.6rem}
+body.lumina-writing .chapter-head .orn{opacity:.82}
+body.lumina-writing .chapter-head h2{
+ font-size:clamp(2rem,4vw,3.1rem);
+ letter-spacing:-.025em;
+}
+body.lumina-writing #manuscript{
+ font-size:clamp(1.18rem,1.55vw,1.43rem);
+ line-height:2.05;
+}
+body.lumina-writing #world-rail{
+ padding:.65rem;
+ border:1px solid rgba(226,186,104,.12);
+ border-radius:16px;
+ background:rgba(5,10,8,.48);
+ backdrop-filter:blur(16px);
+}
+body.lumina-writing #world-rail h3{padding:.25rem .25rem .55rem}
+body.lumina-writing .rail-card{
+ border-radius:10px;
+ border-color:rgba(243,234,216,.12);
+ background:rgba(255,255,255,.045);
+ padding:.75rem .85rem;
+}
+
+/* Layouts menores: hierarquia preservada sem esmagar navegação, texto ou controles. */
+@media(max-width:980px){
+ body.lumina-demo .editor-layout{grid-template-columns:1fr}
+ body.lumina-demo .rail,body.lumina-demo .world-panel{
+  border-right:0;border-left:0;border-bottom:1px solid rgba(229,208,165,.12)
+ }
+ body.lumina-demo .editor-main{min-height:62vh}
+ body.lumina-writing #world-rail{
+  width:min(250px,calc(100vw - 2rem));
+  right:1rem;bottom:4.5rem;
+ }
+}
+@media(max-width:720px){
+ body.lumina-refined .hero-inner{padding:7rem 1.25rem 4rem}
+ body.lumina-refined #hero h1{font-size:clamp(2.8rem,13vw,4.4rem)}
+ body.lumina-refined .hero-actions{align-items:stretch}
+ body.lumina-refined .hero-actions .btn{width:100%;justify-content:center}
+ body.lumina-refined .section{padding:4.6rem 1.25rem}
+ body.lumina-refined .section h2{font-size:clamp(2.15rem,10vw,3.1rem)}
+ body.lumina-refined .pillars{grid-template-columns:1fr;gap:.9rem}
+ body.lumina-refined .pillar{padding:1.35rem 1.2rem}
+ body.lumina-refined .realm{min-height:390px;border-radius:17px}
+ body.lumina-demo .landing-nav{padding-inline:1.1rem}
+ body.lumina-demo .nav-actions{gap:.35rem}
+ body.lumina-demo .nav-actions .btn{font-size:.64rem;padding:.72em .95em}
+ body.lumina-demo .hero{padding:0 1.25rem;align-items:flex-end;padding-bottom:4rem}
+ body.lumina-demo .hero-copy{min-width:0;max-width:100%;padding-bottom:1rem}
+ body.lumina-demo .hero-copy h1{font-size:clamp(2.45rem,11vw,3.45rem)}
+ body.lumina-demo .hero-copy p{font-size:.98rem}
+ body.lumina-demo .hero-actions .btn{flex:1 1 100%;justify-content:center}
+ body.lumina-demo .dash-wrap{padding:2.3rem 1.1rem 3rem}
+ body.lumina-demo .story-grid{grid-template-columns:1fr;gap:1rem}
+ body.lumina-demo .story-cover{height:175px}
+ body.lumina-demo .editor-main{padding:1.15rem}
+ body.lumina-writing .topbar{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:.5rem .8rem;
+  padding:.7rem .85rem;
+ }
+ body.lumina-writing .brandmark{font-size:1.1rem}
+ body.lumina-writing .topbar .story-title{
+  grid-column:2;
+  grid-row:1;
+  text-align:right;
+  font-size:.88rem;
+  padding:.35rem .5rem;
+ }
+ body.lumina-writing .top-actions{
+  grid-column:1/-1;
+  grid-row:2;
+  justify-content:center;
+  gap:.25rem;
+ }
+ body.lumina-writing .tool-btn{font-size:.62rem;padding:.5em .7em;letter-spacing:.08em}
+ body.lumina-writing .sheet{padding-top:9.8rem;padding-bottom:35vh}
+ body.lumina-writing .chapter-head{margin-bottom:2.2rem}
+ body.lumina-writing #manuscript{font-size:1.12rem;line-height:1.9}
+ body.lumina-writing .statusbar{
+  gap:.45rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  font-size:.58rem;
+  letter-spacing:.08em;
+ }
+ body.lumina-writing .statusbar .amb{display:none}
+}
+@media(max-width:390px){
+ body.lumina-writing .tool-btn{font-size:.56rem;padding:.48em .56em}
+ body.lumina-writing .top-actions{gap:.1rem}
+}
+@media(prefers-reduced-motion:reduce){
+ body.lumina-refined .pillar,body.lumina-demo .story-card,
+ body.lumina-demo .pillar-card,body.lumina-writing .tool-btn{transition:none!important}
+}
