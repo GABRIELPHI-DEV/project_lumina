@@ -676,10 +676,9 @@ body.lumina-refined #mundo-vivo{
  background:#17271d!important;
  color:#f3ead8;
 }
-body.lumina-refined #mundo-vivo .section h2,
 body.lumina-refined #mundo-vivo h2{color:#f3ead8}
-body.lumina-refined #mundo-vivo .section .lede,
-body.lumina-refined #mundo-vivo .section p{color:rgba(243,234,216,.72)}
+body.lumina-refined #mundo-vivo .lede,
+body.lumina-refined #mundo-vivo p{color:rgba(243,234,216,.72)}
 body.lumina-refined #mundo-vivo .kicker{color:#d5b56d}
 body.lumina-refined #pilares{
  background:radial-gradient(ellipse at 12% 0%,rgba(120,139,99,.1),transparent 42%),#eee7d8!important;
