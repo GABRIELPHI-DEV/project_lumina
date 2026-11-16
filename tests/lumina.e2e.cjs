@@ -83,9 +83,15 @@ const { chromium } = require('playwright');
 
     // Escrita imersiva: autosave, exportação e restauração de backup.
     await page.goto(base + '/write.html', { waitUntil: 'domcontentloaded' });
+    assert.equal(await page.locator('#film-grain').count(), 0, 'Landing e modo de escrita não devem inserir canvas de ruído.');
     await page.locator('body.lumina-writing').waitFor();
     const paperSurface = await page.locator('.sheet').evaluate(el => getComputedStyle(el).backgroundColor);
-    assert.equal(paperSurface, 'rgb(251, 248, 239)', 'Modo imersivo deve manter a folha editorial clara.');
+    assert.equal(paperSurface, 'rgb(255, 253, 247)', 'Modo imersivo deve usar folha totalmente opaca e clara.');
+    assert.equal(await page.locator('#film-grain').count(), 0, 'Modo imersivo não deve renderizar ruído de filme.');
+    const manuscriptStyle = await page.locator('#manuscript').evaluate(el => ({ color: getComputedStyle(el).color, shadow: getComputedStyle(el).textShadow, opacity: getComputedStyle(el).opacity }));
+    assert.equal(manuscriptStyle.color, 'rgb(41, 45, 39)', 'Texto do manuscrito deve ter contraste escuro.');
+    assert.equal(manuscriptStyle.shadow, 'none', 'Texto do manuscrito não deve receber sombra.');
+    assert.equal(manuscriptStyle.opacity, '1', 'Texto do manuscrito deve permanecer totalmente opaco.');
     await page.locator('#manuscript').fill('Manuscrito de teste da área de escrita.');
     await page.waitForFunction(() => {
       const saved = JSON.parse(localStorage.getItem('lumina-draft-v1') || 'null');
