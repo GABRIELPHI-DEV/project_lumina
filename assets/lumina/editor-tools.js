@@ -125,22 +125,22 @@ function attachDemoLibrary(){
  if(sample)sample.dataset.storyId='coroa';if(sampleNoc)sampleNoc.dataset.storyId='nocturne';
  var libraryKey='lumina-library-v1',activeKey='lumina-active-story-v1';
  var editors={editor:{id:'manuscript',status:'save-status',screen:'editor'},nocturne:{id:'nocturne-manuscript',status:'save-status-noc',screen:'nocturne'}};
- var active='coroa';
+ var active='coroa',activeMode='editor';
  function readLibrary(){try{var x=JSON.parse(localStorage.getItem(libraryKey)||'{}');return x&&typeof x==='object'?x:{};}catch(e){return {};}}
  function writeLibrary(data){try{localStorage.setItem(libraryKey,JSON.stringify(data));return true;}catch(e){return false;}}
- function config(){return active==='nocturne'?editors.nocturne:editors.editor;}
+ function config(){return activeMode==='nocturne'?editors.nocturne:editors.editor;}
  function editor(){return document.getElementById(config().id);}
  function meta(){var s=document.getElementById('screen-'+config().screen);return s&&s.querySelector('.manuscript-topbar .titles');}
  function saveActive(){
   var ed=editor(),m=meta();if(!ed||!m)return;
   var d=readLibrary(),t=m.querySelector('p'),h=m.querySelector('h2');
   d[active]={id:active,title:t?t.textContent.trim():'Minha história',chapter:h?h.textContent.trim():'',
-   html:ed.innerHTML,updatedAt:new Date().toISOString(),mode:active==='nocturne'?'nocturne':'editor'};
+   html:ed.innerHTML,updatedAt:new Date().toISOString(),mode:activeMode};
   if(!writeLibrary(d)){var st=document.getElementById(config().status);if(st)st.textContent='Falha ao salvar biblioteca';}
  }
  function loadStory(id){
   saveActive();active=id;try{localStorage.setItem(activeKey,id);}catch(e){}
-  var d=readLibrary()[id],ed=editor(),m=meta();if(!d||!ed||!m)return;
+  var d=readLibrary()[id];if(!d)return;activeMode=d.mode==='nocturne'?'nocturne':'editor';var ed=editor(),m=meta();if(!ed||!m)return;
   var t=m.querySelector('p'),h=m.querySelector('h2');if(t)t.textContent=d.title||'Minha história';if(h)h.textContent=d.chapter||'Capítulo 1';
   ed.innerHTML=cleanHtml(d.html||'');ed.dispatchEvent(new Event('input',{bubbles:true}));
  }
@@ -164,7 +164,7 @@ function attachDemoLibrary(){
   if(!title){alert('Digite um título para criar sua história.');return;}
   var mode=confirm('Criar no universo Lumina Nocturne?\\n\\nOK: Nocturne (dark romance)\\nCancelar: Lumina (fantasia)')?'nocturne':'editor';
   var id='story-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),d=readLibrary();
-  d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};
+  d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};activeMode=mode;
   if(!writeLibrary(d)){alert('O navegador não conseguiu guardar a nova história. Verifique o espaço disponível.');return;}
   render();loadStory(id);var nav=mode==='nocturne'?'nocturne':'editor',link=document.querySelector('[data-nav="'+nav+'"]');
   if(link)link.click();else{var now=document.querySelector('.screen.is-active'),target=document.getElementById('screen-'+nav);if(now)now.classList.remove('is-active');if(target)target.classList.add('is-active');}
@@ -173,10 +173,16 @@ function attachDemoLibrary(){
   add.addEventListener('click',createStory);add.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();createStory();}});
  }
  grid.addEventListener('click',function(e){var c=e.target.closest('[data-story-id]');if(c)loadStory(c.dataset.storyId);});
+ document.addEventListener('click',function(e){
+  var nav=e.target.closest('.app-header [data-nav]');if(!nav)return;
+  var target=nav.getAttribute('data-nav');
+  if(target==='editor'||target==='nocturne'){saveActive();activeMode=target;}
+ });
  grid.addEventListener('keydown',function(e){var c=e.target.closest('[data-story-id]');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();loadStory(c.dataset.storyId);}});
  Object.keys(editors).forEach(function(k){var ed=document.getElementById(editors[k].id);if(ed)ed.addEventListener('input',function(){saveActive();});});
  var stored='coroa';try{stored=localStorage.getItem(activeKey)||'coroa';}catch(e){}
  if(stored==='nocturne')active='nocturne';else if(stored.indexOf('story-')===0&&readLibrary()[stored])active=stored;
+ var selected=readLibrary()[active];if(selected)activeMode=selected.mode==='nocturne'?'nocturne':'editor';else activeMode=active==='nocturne'?'nocturne':'editor';
  var remembered=readLibrary()[active];
  if(remembered){
   var target=editor(),targetMeta=meta();
