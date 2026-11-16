@@ -89,3 +89,18 @@ body.lumina-demo:not(:has(#screen-nocturne.is-active)) .story-meta{color:#77816e
 
 /* A criatura voadora foi retirada da experiência; a magia permanece nas partículas e na paisagem. */
 body.lumina-demo #layer-dragon{display:none!important;visibility:hidden!important;pointer-events:none!important}
+
+/* Biblioteca dinâmica: cartões acessíveis e adaptáveis. */
+.lumina-library-card{cursor:pointer}
+.lumina-library-card:focus-visible,.add-card:focus-visible{outline:3px solid #b98b3d;outline-offset:4px}
+.lumina-library-cover{height:100%;display:grid;place-items:center;font:italic 4rem Fraunces,serif;color:#e6d3a6;background:radial-gradient(circle at 50% 30%,rgba(191,158,96,.24),transparent 42%),linear-gradient(145deg,#17291d,#09120e 70%)}
+.lumina-library-card:has(.story-genre):hover .lumina-library-cover{filter:brightness(1.18)}
+#screen-dashboard .add-card{cursor:pointer}
+@media(max-width:767px){
+ #screen-dashboard .story-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:1rem}
+ #screen-dashboard .dash-wrap{padding:1.6rem 1rem 3rem}
+ .lumina-actionbar{width:100%;justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+ .lumina-library-card,.add-card{transition:none!important}
+}
