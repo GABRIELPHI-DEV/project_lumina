@@ -73,8 +73,20 @@ const { chromium } = require('playwright');
     await page.waitForFunction(() => document.getElementById('manuscript').innerText.includes('Conteúdo restaurado pelo teste E2E.'));
     assert.equal(await page.locator('#story-title').innerText(), 'História recuperada');
 
+    // Layout mobile: landing, biblioteca e editor não devem criar overflow horizontal.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(base + '/demo.html', { waitUntil: 'domcontentloaded' });
+    await page.locator('#btn-start').click();
+    await page.locator('#screen-dashboard.is-active').waitFor();
+    const dashboardOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    assert.equal(dashboardOverflow, false, 'Dashboard mobile não deve ter rolagem horizontal da página.');
+    await page.locator('#story-card-1').click();
+    await page.locator('#screen-editor.is-active').waitFor();
+    const editorOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    assert.equal(editorOverflow, false, 'Editor mobile não deve ter rolagem horizontal da página.');
+
     assert.deepEqual(pageErrors, [], 'Não deve haver erros JavaScript não tratados nas páginas testadas.');
-    console.log('PASS: demo, biblioteca, autosave, recarga, Nocturne, exportação e importação de backup.');
+    console.log('PASS: demo, biblioteca, autosave, recarga, Nocturne, exportação/importação e layout mobile.');
   } finally {
     await browser.close();
   }
