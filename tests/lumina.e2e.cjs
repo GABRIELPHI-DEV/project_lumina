@@ -49,7 +49,7 @@ const { chromium } = require('playwright');
     await page.locator('#screen-dashboard.is-active').waitFor();
     await page.locator('.add-card').click();
     await page.locator('#screen-editor.is-active').waitFor();
-    const editorPalette = await page.locator('.page-frame').evaluate(el => getComputedStyle(el).backgroundColor);
+    const editorPalette = await page.locator('.editor-layout:not(.nocturne-layout) .page-frame').evaluate(el => getComputedStyle(el).backgroundColor);
     assert.equal(editorPalette, 'rgb(251, 248, 239)', 'Editor Lumina deve manter o papel claro.');
     for (const label of ['Salvar agora', 'Exportar .txt', 'Backup .json', 'Importar backup']) {
       await page.getByRole('button', { name: label }).waitFor();
