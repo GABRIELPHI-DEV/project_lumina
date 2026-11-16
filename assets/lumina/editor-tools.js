@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 var path=location.pathname.toLowerCase();
-var isWrite=/write\\.html$/.test(path),isDemo=/demo\\.html$/.test(path);
+var isWrite=/write\.html$/.test(path),isDemo=/demo\.html$/.test(path);
 document.body.classList.add(isWrite?'lumina-writing':isDemo?'lumina-demo':'lumina-refined');
 
 function download(name,type,content){
@@ -10,7 +10,7 @@ function download(name,type,content){
  setTimeout(function(){URL.revokeObjectURL(url);},1500);
 }
 function safeName(s){
- return (s||'Minha-historia').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'')
+ return (s||'Minha-historia').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
   .replace(/[^a-z0-9_-]+/gi,'-').replace(/^-|-$/g,'').slice(0,48)||'Minha-historia';
 }
 function makeButton(label,action,primary){
@@ -55,7 +55,7 @@ function attachWriteTools(){
  }
  bar.appendChild(makeButton('Exportar .txt',function(){
   var data=snapshot();download(safeName(data.story)+'.txt', 'text/plain;charset=utf-8',
-   data.story+'\\n'+data.chapter+'\\n\\n'+data.text);
+   data.story+'\n'+data.chapter+'\n\n'+data.text);
  }));
  bar.appendChild(makeButton('Backup .json',function(){
   var data=snapshot();download(safeName(data.story)+'-backup.json','application/json;charset=utf-8',JSON.stringify(data,null,2));
@@ -162,7 +162,7 @@ function attachDemoLibrary(){
  function createStory(){
   var title=prompt('Qual será o título da sua história?');if(title===null)return;title=title.trim().slice(0,90);
   if(!title){alert('Digite um título para criar sua história.');return;}
-  var mode=confirm('Criar no universo Lumina Nocturne?\\n\\nOK: Nocturne (dark romance)\\nCancelar: Lumina (fantasia)')?'nocturne':'editor';
+  var mode=confirm('Criar no universo Lumina Nocturne?\n\nOK: Nocturne (dark romance)\nCancelar: Lumina (fantasia)')?'nocturne':'editor';
   var id='story-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),d=readLibrary();
   d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};
   if(!writeLibrary(d)){alert('O navegador não conseguiu guardar a nova história. Verifique o espaço disponível.');return;}
