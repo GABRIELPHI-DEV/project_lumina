@@ -121,6 +121,8 @@ function attachDemoTools(){
 
 function attachDemoLibrary(){
  var grid=document.querySelector('#screen-dashboard .story-grid');if(!grid)return;
+ var sample=grid.querySelector('#story-card-1'),sampleNoc=grid.querySelector('#story-card-noc');
+ if(sample)sample.dataset.storyId='coroa';if(sampleNoc)sampleNoc.dataset.storyId='nocturne';
  var libraryKey='lumina-library-v1',activeKey='lumina-active-story-v1';
  var editors={editor:{id:'manuscript',status:'save-status',screen:'editor'},nocturne:{id:'nocturne-manuscript',status:'save-status-noc',screen:'nocturne'}};
  var active='coroa';
