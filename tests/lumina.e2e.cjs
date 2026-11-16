@@ -17,12 +17,34 @@ const { chromium } = require('playwright');
   try {
     const base = 'http://127.0.0.1:4173';
 
+    // Identidade visual: cabeçalho escuro integrado, landing editorial e editor em papel.
+    await page.goto(base + '/index.html', { waitUntil: 'domcontentloaded' });
+    await page.locator('body.lumina-refined').waitFor();
+    const navVisual = await page.locator('#site-nav').evaluate(el => {
+      const s = getComputedStyle(el);
+      const login = el.querySelector('.nav-links .btn');
+      return { image: s.backgroundImage, color: s.color, loginRadius: getComputedStyle(login).borderRadius };
+    });
+    assert.match(navVisual.image, /linear-gradient/);
+    assert.equal(navVisual.loginRadius, '999px');
+    await page.evaluate(() => window.scrollTo(0, 120));
+    await page.locator('#site-nav.is-solid').waitFor();
+    const solidNav = await page.locator('#site-nav').evaluate(el => getComputedStyle(el).backgroundColor);
+    assert.equal(solidNav, 'rgba(13, 25, 19, 0.91)');
+    await page.setViewportSize({ width: 390, height: 844 });
+    const landingOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    assert.equal(landingOverflow, false, 'Landing institucional mobile não deve ter overflow horizontal.');
+
+
+
     // Demo: criar, editar, recarregar e reabrir uma história.
     await page.goto(base + '/demo.html', { waitUntil: 'domcontentloaded' });
     await page.locator('#btn-start').click();
     await page.locator('#screen-dashboard.is-active').waitFor();
     await page.locator('.add-card').click();
     await page.locator('#screen-editor.is-active').waitFor();
+    const editorPalette = await page.locator('.page-frame').evaluate(el => getComputedStyle(el).backgroundColor);
+    assert.equal(editorPalette, 'rgb(251, 248, 239)', 'Editor Lumina deve manter o papel claro.');
     for (const label of ['Salvar agora', 'Exportar .txt', 'Backup .json', 'Importar backup']) {
       await page.getByRole('button', { name: label }).waitFor();
     }
@@ -42,11 +64,16 @@ const { chromium } = require('playwright');
     await page.locator('#screen-editor .nocturne-link').click();
     await page.locator('#screen-nocturne.is-active').waitFor();
     await page.locator('#nocturne-manuscript').waitFor();
+    const nocturneSurface = await page.locator('.nocturne-layout .page-frame').evaluate(el => getComputedStyle(el).backgroundImage);
+    assert.match(nocturneSurface, /linear-gradient/, 'Nocturne deve preservar sua superfície escura em degradê.');
     await page.getByRole('button', { name: 'Salvar agora' }).waitFor();
     assert.equal(await page.locator('body').evaluate(el => el.classList.contains('lumina-demo')), true);
 
     // Escrita imersiva: autosave, exportação e restauração de backup.
     await page.goto(base + '/write.html', { waitUntil: 'domcontentloaded' });
+    await page.locator('body.lumina-writing').waitFor();
+    const paperSurface = await page.locator('.sheet').evaluate(el => getComputedStyle(el).backgroundColor);
+    assert.equal(paperSurface, 'rgb(251, 248, 239)', 'Modo imersivo deve manter a folha editorial clara.');
     await page.locator('#manuscript').fill('Manuscrito de teste da área de escrita.');
     await page.waitForFunction(() => {
       const saved = JSON.parse(localStorage.getItem('lumina-draft-v1') || 'null');
