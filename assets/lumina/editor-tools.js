@@ -164,7 +164,7 @@ function attachDemoLibrary(){
   if(!title){alert('Digite um título para criar sua história.');return;}
   var mode=confirm('Criar no universo Lumina Nocturne?\\n\\nOK: Nocturne (dark romance)\\nCancelar: Lumina (fantasia)')?'nocturne':'editor';
   var id='story-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),d=readLibrary();
-  d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};activeMode=mode;
+  d[id]={id:id,title:title,chapter:'Capítulo 1',html:'<p>Comece a escrever sua história…</p>',updatedAt:new Date().toISOString(),mode:mode};
   if(!writeLibrary(d)){alert('O navegador não conseguiu guardar a nova história. Verifique o espaço disponível.');return;}
   render();loadStory(id);var nav=mode==='nocturne'?'nocturne':'editor',link=document.querySelector('[data-nav="'+nav+'"]');
   if(link)link.click();else{var now=document.querySelector('.screen.is-active'),target=document.getElementById('screen-'+nav);if(now)now.classList.remove('is-active');if(target)target.classList.add('is-active');}
