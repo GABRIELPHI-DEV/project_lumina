@@ -29,8 +29,14 @@ const { chromium } = require('playwright');
     assert.equal(navVisual.loginRadius, '999px');
     await page.evaluate(() => window.scrollTo(0, 120));
     await page.locator('#site-nav.is-solid').waitFor();
+    await page.waitForFunction(() => {
+      const nav = document.getElementById('site-nav');
+      return nav && getComputedStyle(nav).backgroundColor === 'rgba(13, 25, 19, 0.91)';
+    }, { timeout: 3000 });
     const solidNav = await page.locator('#site-nav').evaluate(el => getComputedStyle(el).backgroundColor);
     assert.equal(solidNav, 'rgba(13, 25, 19, 0.91)');
+    const sectionSurface = await page.locator('#manifesto').evaluate(el => getComputedStyle(el).backgroundImage);
+    assert.match(sectionSurface, /radial-gradient/, 'Seções editoriais devem usar o acabamento de papel com luz difusa.');
     await page.setViewportSize({ width: 390, height: 844 });
     const landingOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
     assert.equal(landingOverflow, false, 'Landing institucional mobile não deve ter overflow horizontal.');
