@@ -707,3 +707,45 @@ body.lumina-refined #portal .lede{color:rgba(243,234,216,.78)}
  body.lumina-refined #atmosferas .duality{border-radius:17px}
  body.lumina-refined #atmosferas .realm{min-height:390px}
 }
+
+
+/* LUMINA 2.2 — leitura sem transparência, ruído ou efeitos sobre o manuscrito. */
+body.lumina-writing{background:#e8e1d3!important;color:#27352b!important}
+body.lumina-writing #world,
+body.lumina-writing #weather-canvas,
+body.lumina-writing #life-canvas,
+body.lumina-writing #film-grain,
+body.lumina-writing #tint-night,
+body.lumina-writing #glow-fire,
+body.lumina-writing #cine-vignette,
+body.lumina-writing .page-shade{
+ display:none!important;opacity:0!important;visibility:hidden!important;
+}
+body.lumina-writing #scroller{background:#e8e1d3!important;isolation:isolate}
+body.lumina-writing .sheet{
+ background:#fffdf7!important;background-image:none!important;opacity:1!important;
+ color:#292d27!important;border:1px solid #e3dac7!important;border-radius:3px!important;
+ box-shadow:0 12px 36px rgba(48,44,31,.10)!important;
+}
+body.lumina-writing .chapter-head h2,
+body.lumina-writing #chapter-title,
+body.lumina-writing #manuscript,
+body.lumina-writing #manuscript *,
+body.lumina-writing #manuscript p,
+body.lumina-writing #manuscript div,
+body.lumina-writing #manuscript span{
+ color:#292d27!important;text-shadow:none!important;opacity:1!important;filter:none!important;
+}
+body.lumina-writing #manuscript{
+ background:transparent!important;caret-color:#765b2d!important;
+ font-family:Georgia,"Times New Roman",serif!important;
+ font-size:clamp(1.12rem,1.45vw,1.32rem)!important;font-weight:400!important;
+ line-height:1.95!important;letter-spacing:.005em;min-height:58vh;
+}
+body.lumina-writing #manuscript:empty::before{color:#8a887e!important;text-shadow:none!important}
+body.lumina-writing #manuscript > *{opacity:1!important;filter:none!important;text-shadow:none!important}
+body.lumina-writing.focus-mode #manuscript > *:not(.is-current){opacity:1!important;filter:none!important}
+body.lumina-writing .chapter-head h2{text-shadow:none!important}
+@media(prefers-reduced-transparency:reduce){
+ body.lumina-writing .topbar,body.lumina-writing .statusbar,body.lumina-writing #world-rail{backdrop-filter:none!important}
+}
