@@ -177,6 +177,15 @@ function attachDemoLibrary(){
  Object.keys(editors).forEach(function(k){var ed=document.getElementById(editors[k].id);if(ed)ed.addEventListener('input',function(){saveActive();});});
  var stored='coroa';try{stored=localStorage.getItem(activeKey)||'coroa';}catch(e){}
  if(stored==='nocturne')active='nocturne';else if(stored.indexOf('story-')===0&&readLibrary()[stored])active=stored;
+ var remembered=readLibrary()[active];
+ if(remembered){
+  var target=editor(),targetMeta=meta();
+  if(target&&targetMeta){var titleEl=targetMeta.querySelector('p'),chapterEl=targetMeta.querySelector('h2');
+   if(titleEl)titleEl.textContent=remembered.title||'Minha história';
+   if(chapterEl)chapterEl.textContent=remembered.chapter||'Capítulo 1';
+   target.innerHTML=cleanHtml(remembered.html||'');
+  }
+ }
  render();window.addEventListener('pagehide',saveActive);
 }
 
