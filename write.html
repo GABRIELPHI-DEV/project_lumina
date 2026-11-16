@@ -209,6 +209,7 @@
     #world{ transform:scale(1.02); filter:none; }
   }
 </style>
+  <link rel="stylesheet" href="assets/lumina/refinements.css?v=2.2.0">
 </head>
 <body>
 
@@ -232,7 +233,7 @@
 <canvas id="weather-canvas" aria-hidden="true"></canvas>
 <canvas id="life-canvas" aria-hidden="true"></canvas>
 <div class="page-shade" aria-hidden="true"></div>
-<canvas id="film-grain" aria-hidden="true"></canvas>
+
 <div id="cine-vignette" aria-hidden="true"></div>
 
 <!-- portal de entrada -->
@@ -303,34 +304,7 @@
   setTimeout(function(){ intro.classList.add('is-gone'); }, reduceMotion ? 200 : 2600);
   intro.addEventListener('click', function(){ intro.classList.add('is-gone'); });
 
-  /* ================= grão de filme ================= */
-  var grainCv = document.getElementById('film-grain');
-  if(!reduceMotion){
-    var gctx = grainCv.getContext('2d');
-    var GW = 0, GH = 0;
-    var noise = document.createElement('canvas'); noise.width = 256; noise.height = 144;
-    var nctx = noise.getContext('2d');
-    var sizeGrain = function(){
-      GW = grainCv.width = Math.floor(window.innerWidth / 2);
-      GH = grainCv.height = Math.floor(window.innerHeight / 2);
-    };
-    sizeGrain(); window.addEventListener('resize', sizeGrain);
-    var gFrame = 0;
-    (function drawGrain(){
-      if((gFrame++ % 3) === 0){
-        var img = nctx.createImageData(256, 144), d = img.data;
-        for(var i = 0; i < d.length; i += 4){
-          var v = (Math.random() * 255) | 0;
-          d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
-        }
-        nctx.putImageData(img, 0, 0);
-        gctx.imageSmoothingEnabled = false;
-        gctx.clearRect(0, 0, GW, GH);
-        gctx.drawImage(noise, 0, 0, GW, GH);
-      }
-      requestAnimationFrame(drawGrain);
-    })();
-  }else{ grainCv.style.display = 'none'; }
+  /* Grão de filme removido: a escrita usa uma superfície visual limpa. */
 
   /* ================= canvases: vida + clima ================= */
   var lifeCv = document.getElementById('life-canvas');
@@ -726,5 +700,6 @@
     reduceMotion ? 300 : 2800);
 })();
 </script>
+  <script src="assets/lumina/editor-tools.js?v=2.2.0"></script>
 </body>
 </html>

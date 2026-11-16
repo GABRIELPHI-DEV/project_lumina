@@ -470,6 +470,7 @@
     #film-grain{ display:none; }
   }
 </style>
+  <link rel="stylesheet" href="assets/lumina/refinements.css?v=2.2.0">
 </head>
 <body>
 
@@ -489,7 +490,7 @@
 <div id="portal-veil" aria-hidden="true"></div>
 <div id="scroll-thread" aria-hidden="true"></div>
 <div id="cursor-glow" aria-hidden="true"></div>
-<canvas id="film-grain" aria-hidden="true"></canvas>
+
 <div id="cine-vignette" aria-hidden="true"></div>
 
 <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
@@ -735,40 +736,7 @@
     b.appendChild(sh); b.appendChild(co);
   });
 
-  /* ---------- grão de filme (acaba com qualquer cara de "estático") ---------- */
-  var grainCv = document.getElementById('film-grain');
-  if(!reduceMotion){
-    var gctx = grainCv.getContext('2d');
-    var GW = 0, GH = 0;
-    var noise = document.createElement('canvas');
-    noise.width = 256; noise.height = 144;
-    var nctx = noise.getContext('2d');
-    function sizeGrain(){
-      GW = grainCv.width = Math.floor(window.innerWidth / 2);
-      GH = grainCv.height = Math.floor(window.innerHeight / 2);
-      grainCv.style.width = '100%'; grainCv.style.height = '100%';
-    }
-    sizeGrain();
-    window.addEventListener('resize', sizeGrain);
-    var gFrame = 0;
-    function drawGrain(){
-      if((gFrame++ % 3) === 0){
-        var img = nctx.createImageData(256, 144), d = img.data;
-        for(var i = 0; i < d.length; i += 4){
-          var v = (Math.random() * 255) | 0;
-          d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
-        }
-        nctx.putImageData(img, 0, 0);
-        gctx.imageSmoothingEnabled = false;
-        gctx.clearRect(0, 0, GW, GH);
-        gctx.drawImage(noise, 0, 0, GW, GH);
-      }
-      requestAnimationFrame(drawGrain);
-    }
-    requestAnimationFrame(drawGrain);
-  }else{
-    grainCv.style.display = 'none';
-  }
+  /* Grão de filme removido: sem ruído artificial sobre a interface. */
 
   /* ---------- vida no hero: poeira dourada + vagalumes de bokeh ---------- */
   var lifeCv = document.getElementById('hero-life');
@@ -1055,5 +1023,6 @@
   }
 })();
 </script>
+  <script src="assets/lumina/editor-tools.js?v=2.2.0"></script>
 </body>
 </html>
