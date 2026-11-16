@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
   page.on('pageerror', error => pageErrors.push(error.message));
   page.on('dialog', async dialog => {
     if (dialog.type() === 'prompt') await dialog.accept('Lumina QA');
-    else if (dialog.type() === 'confirm') await dialog.dismiss();
+    else if (dialog.type() === 'confirm') { if (dialog.message().includes('Criar no universo')) await dialog.dismiss(); else await dialog.accept(); }
     else await dialog.accept();
   });
 
